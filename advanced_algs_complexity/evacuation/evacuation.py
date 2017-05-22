@@ -76,9 +76,18 @@ def find_shortest_path():
             if (short_path[0]==0 or len(search_path)<len(short_path)): #first path or shorter path then save
                 short_path=search_path
 
-                
-                
+def find_next_path(last_path):
+    #starting with the last path, look for the next path starting with the last vertex
+    #if its the last edge for the vertex, pop the vertex from the path and look at the next edge from the previous vertex
+    #repeat this until the last vertex is reached size(graph) or until there are no more edges from the first vertex
+    #set the only remaining element to -1 when the end is found
+    #return the path if a path is found
+    #do not chose reverse edges of edges that are in the path
 
+    #figure out how to start the loop to find the path.  can i start with the next path or go back one??
+    #while (graph.get_edge(path[-1] 
+
+    
 if __name__ == '__main__':
     graph = read_data()
     print(max_flow(graph, 0, graph.size() - 1))
