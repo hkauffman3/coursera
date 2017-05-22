@@ -71,12 +71,12 @@ def find_shortest_path():
         #the first element of search_path will be set to -1 when there are no more paths
         #look for the next path until then
         #once a path is found, compare to the current short_path and save if shorter
-        search_path=find_next_path(search_path)
+        search_path=find_next_path(graph,search_path)
         if(search_path[0]!=-1): #path found
             if (short_path[0]==0 or len(search_path)<len(short_path)): #first path or shorter path then save
                 short_path=search_path
 
-def find_next_path(last_path):
+def find_next_path(graph,last_path):
     #starting with the last path, look for the next path starting with the last vertex
     #if its the last edge for the vertex, pop the vertex from the path and look at the next edge from the previous vertex
     #repeat this until the last vertex is reached size(graph) or until there are no more edges from the first vertex
@@ -84,9 +84,33 @@ def find_next_path(last_path):
     #return the path if a path is found
     #do not chose reverse edges of edges that are in the path
 
-    #figure out how to start the loop to find the path.  can i start with the next path or go back one??
-    #while (graph.get_edge(path[-1] 
+    #get the last edge from the path and cut the edge off
 
+    last_edge_id=last_path[-1]
+    path=del last_path[-1]
+    
+    
+    while (graph.get_edge(path[-1]).v!=size(graph)-1):
+        vertex=graph.get_edge(path[-1]).v
+        next_edge_id=0
+        if (graph.get_ids(vertex)[-1]!=last_edge_id):
+            #there are more edges in the list for the vertex
+            next_edge_id=find_next_edge(graph, path, last_edge_id)
+            #-1 if no valid paths remaining from vertex
+            if (next_edge_id!=-1):
+                #valid path, add to path
+                path.append(next_edge_id)
+                last_edge_id=-1 #invalid value since we are on a new path
+            else:
+                #not a valid path, quit at vertex zero
+                #if vertex not zero, update path and last_edge_id and loop
+                if (len(path)<2):
+                    return -1
+                else:
+                    last_edge_id=path[-1]
+                    path = del path[-1]
+
+    return path
     
 if __name__ == '__main__':
     graph = read_data()
